@@ -47,6 +47,8 @@ public class Brick : MonoBehaviour
             Destroy(gameObject);
             brickManager.RemoveBrick(this);
         }
+
+        ScoreScript.scoreValue = ScoreScript.scoreValue + 10;
     }
 
     IEnumerator WaitSecondsAndDestroy(int seconds, BrickManager manager)

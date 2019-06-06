@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bounds : MonoBehaviour
 {
@@ -17,9 +15,10 @@ public class Bounds : MonoBehaviour
 
     }
 
-	void OnTriggerEnter2D(Collider2D other)
-	{
-		other.GetComponent<Ball>().Respawn();
-		FindObjectOfType<BrickManager>().ResetLevel();
-	}
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        other.GetComponent<Ball>().Respawn();
+        FindObjectOfType<BrickManager>().ResetLevel(0);
+        ScoreScript.scoreValue = 0;
+    }
 }

@@ -11,16 +11,17 @@ public class BrickManager : MonoBehaviour
     private List<GameObject> bricks = new List<GameObject>();
     public bool stretchBricks;
     public bool playSoundOnDestroyBrick;
-		public bool enableParticleSystem;
-		public bool enableCameraShake;
-		public GameObject particleSystem;
+    public bool enableParticleSystem;
+    public bool enableCameraShake;
+    public GameObject particleSystem;
 
+    public int level;
     // private Color brickColor;
 
     // Use this for initialization
     void Start()
     {
-        ResetLevel();
+        ResetLevel(this.level);
     }
 
     // Update is called once per frame
@@ -29,8 +30,10 @@ public class BrickManager : MonoBehaviour
 
     }
 
-    public void ResetLevel()
+    public void ResetLevel(int level)
     {
+        this.level = level;
+
         foreach (var brick in bricks)
         {
             Destroy(brick);
@@ -43,7 +46,7 @@ public class BrickManager : MonoBehaviour
             for (var y = 0; y < rows; y++)
             {
                 var newX = x * (brickPrefab.transform.localScale.x + spacing);
-                var newY = -y * (brickPrefab.transform.localScale.y + spacing);
+                var newY = -y * (brickPrefab.transform.localScale.y + spacing + level / 5);
                 var spawnPosition = (Vector2)transform.position + new Vector2(newX, newY);
 
                 var newBrick = Instantiate(brickPrefab, spawnPosition, Quaternion.identity);
@@ -60,7 +63,11 @@ public class BrickManager : MonoBehaviour
         bricks.Remove(brick.gameObject);
         if (bricks.Count == 0)
         {
-            ResetLevel();
+            if (level < 5)
+            {
+                level++;
+            }
+            ResetLevel(level);
         }
     }
 }
